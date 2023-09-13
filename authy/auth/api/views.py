@@ -20,7 +20,7 @@ def login(request):
     except InvalidCredentials as e:
         detail = {'detail': str(e)}
         return Response(detail, status=403)
-    
+
     django_login(request, user)
     response = Response(status=200)
     response.set_cookie('access', user.jwt_token)

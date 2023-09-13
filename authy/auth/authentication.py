@@ -13,10 +13,10 @@ class JWTAuthentication(authentication.BaseAuthentication):
         access = request.COOKIES.get('access')
         if access is None:
             return None
-        
+
         payload = jwt_decode(access)
         if payload is None:
             return None
-        
+
         user = user_get(payload['id'])
         return (user, None)

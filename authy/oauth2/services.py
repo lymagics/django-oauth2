@@ -17,7 +17,7 @@ def oauth2_authorize(provider_name: str) -> OAuth2:
     if provider is None:
         error = 'Unsupported provider.'
         raise OAuth2Error(error)
-    
+
     oauth2_state = secrets.token_urlsafe(16)
     qs = urlencode({
         'client_id': provider['client_id'],
@@ -49,19 +49,19 @@ def oauth2_callback(
     if code is None:
         error = 'OAuth2 code was empty.'
         raise OAuth2Error(error)
-    
+
     oauth2_token = queries.get_access_token(
         provider, provider_name, code
     )
     if oauth2_token is None:
         error = 'Failed to get access token.'
         raise OAuth2Error(error)
-    
+
     email = queries.get_user_info(provider, oauth2_token)
     if email is None:
         error = 'Failed to get user info.'
         raise OAuth2Error(error)
-    
+
     user = user_get_by_email(email)
     if user is not None:
         return user
