@@ -17,7 +17,7 @@ class TestServices(TestCase):
         self.assertIsInstance(oauth2, OAuth2)
         url = oauth2.url
         self.assertIn('client_id', url)
-        self.assertIn('redirect_url', url)
+        self.assertIn('redirect_uri', url)
         self.assertIn('response_type', url)
         self.assertIn('scope', url)
         self.assertIn('state', url)
