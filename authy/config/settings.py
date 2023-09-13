@@ -132,3 +132,5 @@ OAUTH2_PROVIDERS = {
         'scopes': ['user:email'],
     },
 }
+
+BACKEND_OAUTH2_URL = env.str('BACKEND_OAUTH2_URL')
