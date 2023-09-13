@@ -28,8 +28,7 @@ def oauth2_callback(request, provider: str):
     except OAuth2Error as e:
         detail = {'detail': str(e)}
         return JsonResponse(detail)
-    
-    print(user)
+
     django_login(request, user)
     response = HttpResponseRedirect(settings.FRONTEND_URL)
     response.set_cookie('access', user.jwt_token)
