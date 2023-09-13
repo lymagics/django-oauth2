@@ -20,7 +20,7 @@ def oauth2_authorize(provider_name: str) -> OAuth2:
     oauth2_state = secrets.token_urlsafe(16)
     qs = urlencode({
         'client_id': provider['client_id'],
-        'redirect_url': settings.BACKEND_OAUTH2_URL + '/' + provider_name,
+        'redirect_uri': settings.BACKEND_OAUTH2_URL + '/' + provider_name,
         'response_type': 'code',
         'scope': ' '.join(provider['scopes']),
         'state': oauth2_state,
