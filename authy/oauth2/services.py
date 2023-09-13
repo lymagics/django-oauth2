@@ -26,3 +26,12 @@ def oauth2_authorize(provider_name: str) -> OAuth2:
         state=oauth2_state,
         url=provider['authorize_url'] + '?' + qs,
     )
+
+
+def oauth2_callback(
+    provider_name: str,
+    code: str,
+    state: str,
+    session_state: str
+):
+    pass

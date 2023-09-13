@@ -5,7 +5,7 @@ from django.conf import settings
 import requests
 
 
-def access_token_get(provider: dict, name: str, code: str) -> Optional[str]:
+def get_access_token(provider: dict, name: str, code: str) -> Optional[str]:
     response = requests.post(provider['token_url'], data={
         'client_id': provider['client_id'],
         'client_secret': provider['client_secret'],
@@ -18,7 +18,7 @@ def access_token_get(provider: dict, name: str, code: str) -> Optional[str]:
     return response.json().get('access_token')
 
 
-def userinfo_get(provider: dict, access_token: str) -> Optional[str]:
+def get_user_info(provider: dict, access_token: str) -> Optional[str]:
     response = requests.get(provider['userinfo']['url'], headers={
         'Authorization': 'Bearer ' + access_token,
         'Accept': 'application/json',
