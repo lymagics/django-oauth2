@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  authy:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    env_file:
+      - authy.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    env_file:
+      - db.env

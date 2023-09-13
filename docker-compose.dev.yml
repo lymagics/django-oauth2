@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  authy:
+    extends:
+      file: docker-compose.yml
+      service: authy
+    command: >
+      sh -c "python /waitlist/wait_for_postgres.py &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./authy:/authy
+    ports:
+      - '8000:8000'
+
+  db:
+    extends:
+      file: docker-compose.yml
+      service: db
+    volumes:
+      - authy-data:/var/lib/postgresql/data
+
+volumes:
+  authy-data:
