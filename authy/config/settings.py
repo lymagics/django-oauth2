@@ -25,6 +25,8 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
+
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +91,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'users.User'
+
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
@@ -103,3 +107,31 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+OAUTH2_PROVIDERS = {
+    'google': {
+        'client_id': env.str('GOOGLE_CLIENT_ID'),
+        'client_secret': env.str('GOOGLE_CLIENT_SECRET'),
+        'authorize_url': 'https://accounts.google.com/o/oauth2/auth',
+        'token_url': 'https://accounts.google.com/o/oauth2/token',
+        'userinfo': {
+            'url': 'https://www.googleapis.com/oauth2/v3/userinfo',
+            'email': lambda json: json['email'],
+        },
+        'scopes': ['https://www.googleapis.com/auth/userinfo.email'],
+    },
+    'github': {
+        'client_id': env.str('GITHUB_CLIENT_ID'),
+        'client_secret': env.str('GITHUB_CLIENT_SECRET'),
+        'authorize_url': 'https://github.com/login/oauth/authorize',
+        'token_url': 'https://github.com/login/oauth/access_token',
+        'userinfo': {
+            'url': 'https://api.github.com/user/emails',
+            'email': lambda json: json[0]['email'],
+        },
+        'scopes': ['user:email'],
+    },
+}
+
+BACKEND_OAUTH2_URL = env.str('BACKEND_OAUTH2_URL')
+FRONTEND_URL = env.str('FRONTEND_URL')
