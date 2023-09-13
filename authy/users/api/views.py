@@ -1,8 +1,10 @@
 from django.http import Http404
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from auth.authentication import JWTAuthentication
 from core.decorators import input, output
 from users import services, selectors
 from users.api.schemas import UserIn, UserOut
@@ -27,3 +29,11 @@ def user_get(request, pk: int):
     if user is None:
         raise Http404
     return user
+
+
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+@output(UserOut)
+def me(request):
+    return request.user
