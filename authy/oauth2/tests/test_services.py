@@ -41,3 +41,15 @@ class TestServices(TestCase):
         get_access_token_mock.return_value = '123'
         user = services.oauth2_callback('google', '123', 'abc', 'abc')
         self.assertEqual(user, new_user)
+
+    def test_oauth2_callback_fail_unsupported_provider(self):
+        with self.assertRaises(OAuth2Error):
+            services.oauth2_callback('unsupported', '123', 'abc', 'abc')
+
+    def test_oauth2_callback_fail_no_code(self):
+        with self.assertRaises(OAuth2Error):
+            services.oauth2_callback('unsupported', None, 'abc', 'abc')
+
+    def test_oauth2_callback_fail_invalid_state(self):
+        with self.assertRaises(OAuth2Error):
+            services.oauth2_callback('unsupported', '123', 'abc', 'cba')
