@@ -6,6 +6,7 @@ from django.conf import settings
 from oauth2 import queries
 from oauth2.errors import OAuth2Error
 from oauth2.models import OAuth2
+from oauth2.utils import generate_unique_username
 from users.models import User
 from users.selectors import user_get_by_email
 from users.services import user_create
@@ -66,6 +67,6 @@ def oauth2_callback(
         return user
     return user_create(
         email=email,
-        username=email.split('@')[0],
+        username=generate_unique_username(email.split('@')[0]),
         password=secrets.token_urlsafe(16),
     )
