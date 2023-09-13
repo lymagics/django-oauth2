@@ -17,3 +17,8 @@ class TestSelectors(TestCase):
         new_user = UserFactory()
         user = selectors.user_get_by_email(new_user.email)
         self.assertEqual(user, new_user)
+
+    def test_user_get_by_username(self):
+        new_user = UserFactory()
+        user = selectors.user_get_by_username(new_user.username)
+        self.assertEqual(user, new_user)
