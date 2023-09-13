@@ -3,3 +3,4 @@ environs[django]==9.5.0
 djangorestframework==3.14.0
 django-cors-headers==4.2.0
 factory-boy==3.3.0
+PyJWT==2.8.0
