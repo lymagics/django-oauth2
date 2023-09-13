@@ -25,3 +25,10 @@ def login(request):
     response = Response(status=200)
     response.set_cookie('access', user.jwt_token)
     return response
+
+
+@api_view(['POST'])
+def logout(request):
+    response = Response(status=200)
+    response.delete_cookie('access')
+    return response
